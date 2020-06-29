@@ -15,7 +15,7 @@ namespace Service
 
         public PostResponseDto Create(PostRequestDto request);
 
-        public PostResponseDto Update(PostRequestDto request);
+        public PostResponseDto Update(int postId , PostRequestDto request);
 
         public void Delete(int id);
     }

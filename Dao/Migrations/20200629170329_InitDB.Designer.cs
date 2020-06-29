@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dao.Migrations
 {
     [DbContext(typeof(AppDb))]
-    [Migration("20200629112639_CreateWebStoreDatabase")]
-    partial class CreateWebStoreDatabase
+    [Migration("20200629170329_InitDB")]
+    partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,6 +63,26 @@ namespace Dao.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("Domain.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Src")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("PostPhotos");
+                });
+
             modelBuilder.Entity("Domain.Post", b =>
                 {
                     b.Property<int>("Id")
@@ -112,26 +132,6 @@ namespace Dao.Migrations
                     b.HasIndex("PostId");
 
                     b.ToTable("PostCategory");
-                });
-
-            modelBuilder.Entity("Domain.PostPhoto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Src")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostId");
-
-                    b.ToTable("PostPhoto");
                 });
 
             modelBuilder.Entity("Domain.Rate", b =>
@@ -195,6 +195,15 @@ namespace Dao.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Photo", b =>
+                {
+                    b.HasOne("Domain.Post", "Post")
+                        .WithMany("Photos")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Domain.Post", b =>
                 {
                     b.HasOne("Domain.User", "User")
@@ -214,15 +223,6 @@ namespace Dao.Migrations
 
                     b.HasOne("Domain.Post", "Post")
                         .WithMany("Categories")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.PostPhoto", b =>
-                {
-                    b.HasOne("Domain.Post", "Post")
-                        .WithMany("Photos")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

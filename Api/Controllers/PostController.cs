@@ -32,10 +32,28 @@ namespace Api.Controllers
             return _postService.FindAll(request);
         }
 
+        [HttpGet("{id}")]
+        public PostResponseDto GetOne(int id)
+        {
+            return _postService.FindById(id);
+        }
+
         [HttpPost]
         public PostResponseDto Post([FromBody] PostRequestDto request)
         {
             return _postService.Create(request);
+        }
+
+        [HttpPut("{id}")]
+        public PostResponseDto Put(int id, [FromBody] PostRequestDto request)
+        {
+            return _postService.Update(id, request);
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            _postService.Delete(id);
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Dao;
 using Dao.Utils;
 using Domain;
 using Dto.Request;
 using Dto.Response;
 using Dto.Search;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +28,7 @@ namespace Service.Impl
 
         public PostResponseDto Create(PostRequestDto request)
         {
-            var photos = request.Photos
-                .Select(src => new PostPhoto { Src = src })
-                .ToList();
+            
             var categories = _db.Categories
                 .Where(category => request.Categories.Contains(category.Id))
                 .Select(category => new PostCategory { Category = category })
@@ -39,7 +39,7 @@ namespace Service.Impl
                 Content = request.Content,
                 MainPhoto = request.MainPhoto,
                 Categories = categories,
-                Photos = photos,
+                Photos = request.Photos.Select(src => new Photo { Src = src }).ToList(),
                 UserId = 1
             };
             _db.Posts.Add(post);
@@ -50,6 +50,9 @@ namespace Service.Impl
         public void Delete(int id)
         {
             var post = _db.Posts.Find(id);
+            if (post == null) {
+                throw new Exception("No post with that id");
+            }
             _db.Posts.Remove(post);
             _db.SaveChanges();
         }
@@ -70,13 +73,33 @@ namespace Service.Impl
 
         public PostResponseDto FindById(int id)
         {
-            var post = _db.Posts.Find(id);
+            var post = _db.Posts.First(post => post.Id == id);
             return _mapper.Map<PostResponseDto>(post);
         }
-
-        public PostResponseDto Update(PostRequestDto request)
+    
+        public PostResponseDto Update(int postId, PostRequestDto request)
         {
-            throw new NotImplementedException();
+            var categories = _db.Categories
+                .Where(category => request.Categories.Contains(category.Id))
+                .Select(category => new PostCategory { Category = category })
+                .ToList();
+            var post = _db.Posts.First(post => post.Id == postId);
+            if (post != null) {
+                post.Photos.Clear();
+
+                post.Title = request.Title;
+                post.Description = request.Description;
+                post.Content = request.Content;
+                post.MainPhoto = request.MainPhoto;
+                post.Categories = categories;
+                post.Photos = request.Photos.Select(src => new Photo { Src = src }).ToList();
+
+                _db.Posts.Update(post);
+                _db.SaveChanges();
+                return _mapper.Map<PostResponseDto>(post);
+            };
+            
+            return null;
         }
     }
 }

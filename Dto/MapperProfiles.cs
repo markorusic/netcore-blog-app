@@ -11,7 +11,12 @@ namespace Dto
     {
         public MapperProfiles()
         {
+            CreateMap<User, UserResponseDto>();
             CreateMap<Post, PostResponseDto>();
+            CreateMap<Comment, CommentResponseDto>();
+            CreateMap<Rate, RateResponseDto>();
+            CreateMap<Category, CategoryResponseDto>();
+            CreateMap<Photo, PhotoResponseDto>();
         }
     }
 }

@@ -18,8 +18,12 @@ namespace Domain
 
         public User User { get; set; }
 
-        public ICollection<PostPhoto> Photos { get; set; }
+        public ICollection<Photo> Photos { get; set; }
 
         public ICollection<PostCategory> Categories { get; set; }
+
+        public ICollection<Comment> Comments { get; set; }
+
+        public ICollection<Rate> Rates { get; set; }
     }
 }

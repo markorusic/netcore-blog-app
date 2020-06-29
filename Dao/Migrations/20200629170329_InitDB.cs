@@ -2,7 +2,7 @@
 
 namespace Dao.Migrations
 {
-    public partial class CreateWebStoreDatabase : Migration
+    public partial class InitDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -112,7 +112,7 @@ namespace Dao.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PostPhoto",
+                name: "PostPhotos",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -122,9 +122,9 @@ namespace Dao.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostPhoto", x => x.Id);
+                    table.PrimaryKey("PK_PostPhotos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PostPhoto_Posts_PostId",
+                        name: "FK_PostPhotos_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "Id",
@@ -179,8 +179,8 @@ namespace Dao.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PostPhoto_PostId",
-                table: "PostPhoto",
+                name: "IX_PostPhotos_PostId",
+                table: "PostPhotos",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
@@ -208,7 +208,7 @@ namespace Dao.Migrations
                 name: "PostCategory");
 
             migrationBuilder.DropTable(
-                name: "PostPhoto");
+                name: "PostPhotos");
 
             migrationBuilder.DropTable(
                 name: "Rates");

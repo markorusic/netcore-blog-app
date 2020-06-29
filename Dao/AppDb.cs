@@ -35,7 +35,7 @@ namespace Dao
 
         public DbSet<Post> Posts { get; set; }
 
-        public DbSet<PostPhoto> PostPhotos { get; set; }
+        public DbSet<Photo> PostPhotos { get; set; }
 
         public DbSet<Category> Categories { get; set; }
 
