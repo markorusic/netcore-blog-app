@@ -20,7 +20,7 @@ namespace Dao.Utils
             result.PageCount = (int)Math.Ceiling(pageCount);
  
             var skip = (page - 1) * pageSize;     
-            result.Results = query.Skip(skip).Take(pageSize).ToList();
+            result.Content = query.Skip(skip).Take(pageSize).ToList();
  
             return result;
         }
