@@ -1,6 +1,7 @@
 ﻿using Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Runtime.InteropServices;
 
 namespace Dao
 {
@@ -9,8 +10,12 @@ namespace Dao
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            //optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=WebStoreApp;Integrated Security=True");
-            optionsBuilder.UseInMemoryDatabase("BlogApp");
+            
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) {
+                optionsBuilder.UseInMemoryDatabase("BlogApp");
+            } else {
+                optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=WebStoreApp;Integrated Security=True");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
