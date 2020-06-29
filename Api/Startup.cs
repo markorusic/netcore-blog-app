@@ -49,15 +49,7 @@ namespace Api
 
             //app.UseHttpsRedirection();
 
-            app.UseExceptionHandler(a => a.Run(async context =>
-            {
-                var feature = context.Features.Get<IExceptionHandlerPathFeature>();
-                var exception = feature.Error;
-
-                var result = JsonConvert.SerializeObject(new { error = exception.Message });
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync(result);
-            }));
+            app.UseMiddleware<CustomExceptionMiddleware>();
 
             app.UseRouting();
 
