@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "..\Service\Servi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dto", "..\Dto\Dto.csproj", "{43EDA84E-610C-4726-A914-ACC685A54EFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceException", "..\ResourceException\ResourceException.csproj", "{B42E57E1-81F0-4785-A5AD-6B79FFDE7650}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{43EDA84E-610C-4726-A914-ACC685A54EFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43EDA84E-610C-4726-A914-ACC685A54EFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43EDA84E-610C-4726-A914-ACC685A54EFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B42E57E1-81F0-4785-A5AD-6B79FFDE7650}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B42E57E1-81F0-4785-A5AD-6B79FFDE7650}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B42E57E1-81F0-4785-A5AD-6B79FFDE7650}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B42E57E1-81F0-4785-A5AD-6B79FFDE7650}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
