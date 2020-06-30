@@ -2,15 +2,16 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using ResourceException;
 
-namespace Api
+namespace Api.Middlewares
 {
-    public class CustomExceptionMiddleware
+    public class ExceptionMiddleware
     {
         private readonly RequestDelegate next;
 
-        public CustomExceptionMiddleware(RequestDelegate next)
+        public ExceptionMiddleware(RequestDelegate next)
         {
             this.next = next;
         }
@@ -33,26 +34,25 @@ namespace Api
 
         private Task HandleExceptionAsync(HttpContext context, HttpException exception)
         {
-            string result = null;
+            var message = "Runtime error";
             context.Response.ContentType = "application/json";
             if (exception is HttpException)
             {
-                result = new ErrorDetails() { Message = exception.Message, StatusCode = (int)exception.StatusCode }.ToString();
+                message = exception.Message;
                 context.Response.StatusCode = (int)exception.StatusCode;
             }
             else
             {
-                result = new ErrorDetails() { Message = "Runtime Error", StatusCode = (int)HttpStatusCode.BadRequest }.ToString();
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
-            return context.Response.WriteAsync(result);
+            return context.Response.WriteAsync(JsonConvert.SerializeObject(new { message }));
         }
 
         private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            string result = new ErrorDetails() { Message = exception.Message, StatusCode = (int)HttpStatusCode.InternalServerError }.ToString();
+            var message = exception.Message;
             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            return context.Response.WriteAsync(result);
+            return context.Response.WriteAsync(JsonConvert.SerializeObject(new { message }));
         }
     }
 }

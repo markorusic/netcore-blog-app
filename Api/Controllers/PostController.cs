@@ -53,7 +53,7 @@ namespace Api.Controllers
             return _postService.Update(id, request);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
