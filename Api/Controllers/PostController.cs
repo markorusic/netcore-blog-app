@@ -8,6 +8,7 @@ using Domain;
 using Dto.Request;
 using Dto.Response;
 using Dto.Search;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Service;
@@ -38,18 +39,21 @@ namespace Api.Controllers
             return _postService.FindById(id);
         }
 
+        [Authorize]
         [HttpPost]
         public PostResponseDto Post([FromBody] PostRequestDto request)
         {
             return _postService.Create(request);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public PostResponseDto Put(int id, [FromBody] PostRequestDto request)
         {
             return _postService.Update(id, request);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
