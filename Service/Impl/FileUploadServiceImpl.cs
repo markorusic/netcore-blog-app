@@ -4,6 +4,7 @@ using ResourceException;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -26,13 +27,22 @@ namespace Service.Impl
         {
             try
             {
-                string rootPath = _env.WebRootPath;
+                var extension = Path.GetExtension(file.FileName);
+                var allowedExtensions = new List<string>() { ".jpg", ".jpeg", ".png" };
+
+                if (!allowedExtensions.Any(e => e == extension))
+                {
+                    throw new HttpException(HttpStatusCode.BadRequest, "image extension should be on of the following: jpg, jpeg, png");
+                }
+
+                var rootPath = _env.WebRootPath;
+                var fileName = "image_" + DateTime.Now.ToFileTime().ToString() + extension;
                 var dirName = "Images";
 
                 var dirPath = Path.Combine(rootPath, $"{dirName}");
                 Directory.CreateDirectory(dirPath);
 
-                var imagePath = $"{dirPath}/{file.FileName}";
+                var imagePath = $"{dirPath}/{fileName}";
                 using (var stream = new FileStream(imagePath, FileMode.Create))
                 {
                     file.CopyTo(stream);
@@ -40,7 +50,7 @@ namespace Service.Impl
 
                 var request = _httpContextAccessor.HttpContext.Request;
                 var baseUrl = $"{request.Scheme}://{request.Host}{request.PathBase}";
-                return $"{baseUrl}/{dirName}/{file.FileName}";
+                return $"{baseUrl}/{dirName}/{fileName}";
             }
             catch (Exception ex)
             {
