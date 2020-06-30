@@ -1,6 +1,7 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using AutoMapper;
@@ -42,7 +43,7 @@ namespace Service.Impl
 
             if (user == null)
             {
-                throw new ResourceNotFoundException("User");
+                throw new HttpException(HttpStatusCode.Unauthorized, "Wrong credentials");
             }
 
             // authentication successful so generate jwt token
@@ -50,7 +51,7 @@ namespace Service.Impl
 
             return new AuthResponseDto
             {
-                Token = "token",
+                Token = token,
                 User = _mapper.Map<UserResponseDto>(user)
             };
         }
@@ -65,7 +66,7 @@ namespace Service.Impl
         {
             // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("supertajnasifra");
+            var key = Encoding.ASCII.GetBytes("supertajnasifrasupertajnasifrasupertajnasifrasupertajnasifra");
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

@@ -10,10 +10,13 @@ namespace Dao
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) {
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
                 optionsBuilder.UseInMemoryDatabase("BlogApp");
-            } else {
+            }
+            else
+            {
                 optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=WebStoreApp;Integrated Security=True");
             }
         }

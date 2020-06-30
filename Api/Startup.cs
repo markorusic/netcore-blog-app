@@ -39,12 +39,13 @@ namespace Api
         {
             services.AddCors();
             services.AddAutoMapper(typeof(MapperProfiles));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllers();
             services.AddDbContext<AppDb>();
             services.AddTransient<IPostService, PostServiceImpl>();
             services.AddTransient<IAuthService, AuthServiceImpl>();
 
-            var key = Encoding.ASCII.GetBytes("supertajnasifra");
+            var key = Encoding.ASCII.GetBytes("supertajnasifrasupertajnasifrasupertajnasifrasupertajnasifra");
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
