@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain;
 using Dto.Request;
 using Dto.Response;
 using Microsoft.AspNetCore.Authorization;
@@ -10,30 +11,36 @@ using Service;
 
 namespace Api.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/auth")]
     public class AuthController : ControllerBase
     {
 
-        private readonly IUserService _userService;
+        private readonly IAuthService _userService;
 
-        public AuthController(IUserService userService)
+        public AuthController(IAuthService userService)
         {
             _userService = userService;
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public AuthResponseDto Post([FromBody] AuthRequestDto request)
         {
             return _userService.Authenticate(request);
         }
 
-        [HttpGet]
-        public IActionResult GetAction()
+        [Authorize(Roles = Role.Admin)]
+        [HttpGet("/admin-test")]
+        public IActionResult TestAdmin()
         {
-            return Ok("123");
+            return Ok("admin");
+        }
+
+        [Authorize(Roles = Role.User)]
+        [HttpGet("/user-test")]
+        public IActionResult TestUser()
+        {
+            return Ok("user");
         }
     }
 }

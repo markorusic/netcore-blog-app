@@ -42,7 +42,7 @@ namespace Api
             services.AddControllers();
             services.AddDbContext<AppDb>();
             services.AddTransient<IPostService, PostServiceImpl>();
-            services.AddTransient<IUserService, UserServiceImpl>();
+            services.AddTransient<IAuthService, AuthServiceImpl>();
 
             var key = Encoding.ASCII.GetBytes("supertajnasifra");
             services.AddAuthentication(x =>

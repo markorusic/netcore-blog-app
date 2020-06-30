@@ -12,6 +12,8 @@ namespace Domain
 
         public string Password { get; set; }
 
+        public string Role { get; set; } = Domain.Role.User;
+
         public ICollection<Post> Posts { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
