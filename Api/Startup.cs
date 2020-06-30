@@ -39,9 +39,11 @@ namespace Api
         {
             services.AddCors();
             services.AddAutoMapper(typeof(MapperProfiles));
+            services.AddSwaggerGen();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllers();
             services.AddDbContext<AppDb>();
+
             services.AddTransient<IAuthService, AuthServiceImpl>();
             services.AddTransient<IPostService, PostServiceImpl>();
             services.AddTransient<ICommentService, CommentServiceImpl>();
@@ -93,6 +95,13 @@ namespace Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
         }
     }
