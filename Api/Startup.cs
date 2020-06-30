@@ -50,6 +50,7 @@ namespace Api
             services.AddTransient<IRateService, RateServiceImpl>();
             services.AddTransient<ICategoryService, CategoryServiceImpl>();
             services.AddTransient<IFileUploadService, FileUploadServiceImpl>();
+            services.AddTransient<IMailService, MailServiceImpl>();
 
             // TODO: move secret to config file
             var key = Encoding.ASCII.GetBytes("supertajnasifrasupertajnasifrasupertajnasifrasupertajnasifra");

@@ -24,25 +24,34 @@ namespace Service.Impl
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
+        private readonly IMailService _mailService;
+
 
         public AuthServiceImpl(
             IMapper mapper,
             AppDb db,
-            IHttpContextAccessor httpContextAccessor
+            IHttpContextAccessor httpContextAccessor,
+            IMailService mailService
         )
         {
             _mapper = mapper;
             _db = db;
             _httpContextAccessor = httpContextAccessor;
-
+            _mailService = mailService;
         }
 
         public AuthResponseDto Authenticate(AuthRequestDto request)
         {
-            var user = _db.Users.FirstOrDefault((x => x.Email == request.Email && x.Password == request.Password));
+            var user = _db.Users.FirstOrDefault((x => x.Email == request.Email));
 
             if (user == null)
             {
+                throw new ResourceNotFoundException("User");
+            }
+
+            if (user.Password != request.Password)
+            {
+                _mailService.Send(user.Email, "Failed login attempt", "");
                 throw new HttpException(HttpStatusCode.Unauthorized, "Wrong credentials");
             }
 
