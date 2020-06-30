@@ -1,9 +1,4 @@
-﻿using Domain;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Dto.Response
+﻿namespace Dto.Response
 {
     public class PostResponseDto
     {

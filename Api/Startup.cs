@@ -42,8 +42,9 @@ namespace Api
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllers();
             services.AddDbContext<AppDb>();
-            services.AddTransient<IPostService, PostServiceImpl>();
             services.AddTransient<IAuthService, AuthServiceImpl>();
+            services.AddTransient<IPostService, PostServiceImpl>();
+            services.AddTransient<ICommentService, CommentServiceImpl>();
 
             var key = Encoding.ASCII.GetBytes("supertajnasifrasupertajnasifrasupertajnasifrasupertajnasifra");
             services.AddAuthentication(x =>

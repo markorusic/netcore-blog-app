@@ -40,7 +40,6 @@ namespace Api.Controllers
             _db.Users.AddRange(
                 new User
                 {
-                    Id = 1,
                     Email = "marko@gmail.com",
                     Username = "markorusic",
                     Password = "123456",
@@ -48,7 +47,6 @@ namespace Api.Controllers
                 },
                 new User
                 {
-                    Id = 2,
                     Email = "marko.admin@gmail.com",
                     Username = "markorusic",
                     Password = "123456",
@@ -56,7 +54,6 @@ namespace Api.Controllers
                 },
                 new User
                 {
-                    Id = 3,
                     Email = "marko2@gmail.com",
                     Username = "markorusic",
                     Password = "123456",
