@@ -7,5 +7,7 @@ namespace Dto.Search
     public class PostSearchRequestDto : PageRequest
     {
         public string Title { get; set; }
+
+        public int? CategoryId { get; set; }
     }
 }

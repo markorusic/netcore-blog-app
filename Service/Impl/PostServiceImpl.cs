@@ -77,6 +77,15 @@ namespace Service.Impl
                 query = query.Where(post => post.Title.ToLower().Contains(request.Title.ToLower()));
             }
 
+            if (request.CategoryId != null)
+            {
+                query = query
+                    .Include(post => post.Categories)
+                    .Where(post => post.Categories
+                        .Any(category => category.CategoryId == request.CategoryId)
+                     );
+            }
+
             return query
                 .Select(post => _mapper.Map<PostResponseDto>(post))
                 .GetPaged(request.Page, request.Size);
