@@ -6,7 +6,7 @@ using Domain;
 using Dto.Request;
 using Dto.Response;
 using Dto.Search;
-using ResourceException;
+using Common;
 
 namespace Service.Impl
 {

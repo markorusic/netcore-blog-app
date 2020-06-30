@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using ResourceException;
+using Common;
 using System;
 using System.Collections.Generic;
 using System.IO;

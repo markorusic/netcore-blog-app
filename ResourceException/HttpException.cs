@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using Newtonsoft.Json.Linq;
 
-namespace ResourceException
+namespace Common
 {
     public class HttpException : Exception
     {

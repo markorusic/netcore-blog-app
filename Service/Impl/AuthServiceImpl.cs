@@ -12,7 +12,7 @@ using Dto.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using ResourceException;
+using Common;
 
 namespace Service.Impl
 {

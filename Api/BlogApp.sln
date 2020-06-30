@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "Api.csproj", "{8EE0B401-713A-4E6A-A738-ED99A578DAAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api.csproj", "{8EE0B401-713A-4E6A-A738-ED99A578DAAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "..\Domain\Domain.csproj", "{F378A8D5-6F52-40CA-8839-785DDE2D59E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "..\Domain\Domain.csproj", "{F378A8D5-6F52-40CA-8839-785DDE2D59E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dao", "..\Dao\Dao.csproj", "{6FC3125A-327D-42B3-9B82-4259E9CE598D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dao", "..\Dao\Dao.csproj", "{6FC3125A-327D-42B3-9B82-4259E9CE598D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "..\Service\Service.csproj", "{3B82132E-2180-4E8A-B393-D1C2CADC9136}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "..\Service\Service.csproj", "{3B82132E-2180-4E8A-B393-D1C2CADC9136}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dto", "..\Dto\Dto.csproj", "{43EDA84E-610C-4726-A914-ACC685A54EFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dto", "..\Dto\Dto.csproj", "{43EDA84E-610C-4726-A914-ACC685A54EFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceException", "..\ResourceException\ResourceException.csproj", "{B42E57E1-81F0-4785-A5AD-6B79FFDE7650}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\ResourceException\Common.csproj", "{B42E57E1-81F0-4785-A5AD-6B79FFDE7650}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

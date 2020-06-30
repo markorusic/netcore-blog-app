@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace ResourceException
+namespace Common
 {
     public class ResourceNotFoundException : HttpException
     {

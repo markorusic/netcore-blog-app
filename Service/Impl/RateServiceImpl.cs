@@ -6,7 +6,7 @@ using Dto.Request;
 using Dto.Response;
 using Dto.Search;
 using Microsoft.EntityFrameworkCore;
-using ResourceException;
+using Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
