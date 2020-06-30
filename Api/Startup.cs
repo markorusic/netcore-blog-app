@@ -46,7 +46,9 @@ namespace Api
             services.AddTransient<IPostService, PostServiceImpl>();
             services.AddTransient<ICommentService, CommentServiceImpl>();
             services.AddTransient<IRateService, RateServiceImpl>();
+            services.AddTransient<IFileUploadService, FileUploadServiceImpl>();
 
+            // TODO: move secret to config file
             var key = Encoding.ASCII.GetBytes("supertajnasifrasupertajnasifrasupertajnasifrasupertajnasifra");
             services.AddAuthentication(x =>
             {
@@ -76,6 +78,8 @@ namespace Api
             }
 
             //app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
 
             app.UseMiddleware<ExceptionMiddleware>();
 
