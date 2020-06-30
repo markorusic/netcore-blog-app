@@ -37,21 +37,32 @@ namespace Api.Controllers
         [HttpGet("seed")]
         public IActionResult Seed()
         {
-            _db.Users.AddRange(new User
-            {
-                Id = 1,
-                Email = "marko@gmail.com",
-                Username = "markorusic",
-                Password = "123456",
-                Role = Domain.Role.User
-            }, new User
-            {
-                Id = 2,
-                Email = "marko.admin@gmail.com",
-                Username = "markorusic",
-                Password = "123456",
-                Role = Domain.Role.Admin
-            });
+            _db.Users.AddRange(
+                new User
+                {
+                    Id = 1,
+                    Email = "marko@gmail.com",
+                    Username = "markorusic",
+                    Password = "123456",
+                    Role = Domain.Role.User
+                },
+                new User
+                {
+                    Id = 2,
+                    Email = "marko.admin@gmail.com",
+                    Username = "markorusic",
+                    Password = "123456",
+                    Role = Domain.Role.Admin
+                },
+                new User
+                {
+                    Id = 3,
+                    Email = "marko2@gmail.com",
+                    Username = "markorusic",
+                    Password = "123456",
+                    Role = Domain.Role.User
+                }
+            );
             _db.SaveChanges();
             return Ok();
         }

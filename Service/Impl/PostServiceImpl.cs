@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Dao;
 using Dao.Utils;
 using Domain;
@@ -17,19 +16,23 @@ namespace Service.Impl
 {
     public class PostServiceImpl : IPostService
     {
+
         private readonly IMapper _mapper;
 
         private readonly AppDb _db;
 
-        public PostServiceImpl(IMapper mapper, AppDb db)
+        private readonly IAuthService _userService;
+
+        public PostServiceImpl(IMapper mapper, AppDb db, IAuthService userService)
         {
             _mapper = mapper;
             _db = db;
+            _userService = userService;
         }
 
         public PostResponseDto Create(PostRequestDto request)
         {
-
+            var userId = _userService.GetCurrentUserId();
             var categories = _db.Categories
                 .Where(category => request.Categories.Contains(category.Id))
                 .Select(category => new PostCategory { Category = category })
@@ -42,7 +45,7 @@ namespace Service.Impl
                 MainPhoto = request.MainPhoto,
                 Categories = categories,
                 Photos = request.Photos.Select(src => new Photo { Src = src }).ToList(),
-                UserId = 1
+                UserId = userId
             };
             _db.Posts.Add(post);
             _db.SaveChanges();
@@ -51,10 +54,15 @@ namespace Service.Impl
 
         public void Delete(int id)
         {
+            var userId = _userService.GetCurrentUserId();
             var post = _db.Posts.Find(id);
             if (post == null)
             {
                 throw new ResourceNotFoundException("Post");
+            }
+            if (post.UserId != userId)
+            {
+                throw new ForbiddenActionException();
             }
             _db.Posts.Remove(post);
             _db.SaveChanges();
@@ -86,12 +94,17 @@ namespace Service.Impl
 
         public PostResponseDto Update(int id, PostRequestDto request)
         {
+            var userId = _userService.GetCurrentUserId();
             var post = _db.Posts.First(post => post.Id == id);
 
             if (post == null)
             {
                 throw new ResourceNotFoundException("Post");
             };
+            if (post.UserId != userId)
+            {
+                throw new ForbiddenActionException();
+            }
 
             var categories = _db.Categories
                 .Where(category => request.Categories.Contains(category.Id))
