@@ -45,6 +45,7 @@ namespace Api
             services.AddTransient<IAuthService, AuthServiceImpl>();
             services.AddTransient<IPostService, PostServiceImpl>();
             services.AddTransient<ICommentService, CommentServiceImpl>();
+            services.AddTransient<IRateService, RateServiceImpl>();
 
             var key = Encoding.ASCII.GetBytes("supertajnasifrasupertajnasifrasupertajnasifrasupertajnasifra");
             services.AddAuthentication(x =>

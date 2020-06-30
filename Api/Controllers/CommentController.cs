@@ -26,7 +26,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("posts/{postId}/comments")]
-        public Page<CommentResponseDto> Get(int postId, [FromQuery] CommentSearchRequestDto request)
+        public Page<CommentResponseDto> Get(int postId, [FromQuery] PageableUserSearchDto request)
         {
             return _commentService.FindAll(postId, request);
         }

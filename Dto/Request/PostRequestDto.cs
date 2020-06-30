@@ -8,16 +8,16 @@ namespace Dto.Request
 {
     public class PostRequestDto
     {
-        [Required(ErrorMessage = "Required field")]
-        [MinLength(5, ErrorMessage = "Must be at least 5 characters long")]
+        [Required]
+        [MinLength(5)]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Required field")]
-        [MinLength(15, ErrorMessage = "Must be at least 15 characters long")]
+        [Required]
+        [MinLength(15)]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Required field")]
-        [MinLength(20, ErrorMessage = "Must be at least 20 characters long")]
+        [Required]
+        [MinLength(20)]
         public string Content { get; set; }
 
         [Required(ErrorMessage = "Required field")]

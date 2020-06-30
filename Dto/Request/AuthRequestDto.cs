@@ -4,10 +4,10 @@ namespace Dto.Request
 {
     public class AuthRequestDto
     {
-        [Required(ErrorMessage = "Required field")]
+        [Required]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Required field")]
+        [Required]
         public string Password { get; set; }
 
     }

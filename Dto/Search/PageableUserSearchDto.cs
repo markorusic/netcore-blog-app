@@ -1,6 +1,6 @@
 namespace Dto.Search
 {
-    public class CommentSearchRequestDto : PageRequest
+    public class PageableUserSearchDto : PageRequest
     {
         public int? UserId { get; set; }
     }

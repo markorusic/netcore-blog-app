@@ -4,7 +4,7 @@ namespace Dto.Request
 {
     public class CommentRequestDto
     {
-        [Required(ErrorMessage = "Required field")]
+        [Required]
         public string Content { get; set; }
     }
 }

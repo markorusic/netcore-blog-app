@@ -64,7 +64,7 @@ namespace Service.Impl
             _db.SaveChanges();
         }
 
-        public Page<CommentResponseDto> FindAll(int postId, CommentSearchRequestDto request)
+        public Page<CommentResponseDto> FindAll(int postId, PageableUserSearchDto request)
         {
             var query = _db.Comments.AsQueryable()
                 .Where(comment => comment.PostId == postId);
