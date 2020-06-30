@@ -55,7 +55,7 @@ namespace Service.Impl
         public void Delete(int id)
         {
             var userId = _userService.GetCurrentUserId();
-            var post = _db.Posts.Find(id);
+            var post = _db.Posts.FirstOrDefault(post => post.Id == id);
             if (post == null)
             {
                 throw new ResourceNotFoundException("Post");
@@ -84,7 +84,7 @@ namespace Service.Impl
 
         public PostResponseDto FindById(int id)
         {
-            var post = _db.Posts.First(post => post.Id == id);
+            var post = _db.Posts.FirstOrDefault(post => post.Id == id);
             if (post == null)
             {
                 throw new ResourceNotFoundException("Post");
@@ -95,7 +95,7 @@ namespace Service.Impl
         public PostResponseDto Update(int id, PostRequestDto request)
         {
             var userId = _userService.GetCurrentUserId();
-            var post = _db.Posts.First(post => post.Id == id);
+            var post = _db.Posts.FirstOrDefault(post => post.Id == id);
 
             if (post == null)
             {
@@ -120,8 +120,8 @@ namespace Service.Impl
             post.Categories = categories;
             post.Photos = request.Photos.Select(src => new Photo { Src = src }).ToList();
 
-            _db.Posts.Update(post);
             _db.SaveChanges();
+
             return _mapper.Map<PostResponseDto>(post);
         }
     }

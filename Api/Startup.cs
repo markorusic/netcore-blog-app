@@ -46,6 +46,7 @@ namespace Api
             services.AddTransient<IPostService, PostServiceImpl>();
             services.AddTransient<ICommentService, CommentServiceImpl>();
             services.AddTransient<IRateService, RateServiceImpl>();
+            services.AddTransient<ICategoryService, CategoryServiceImpl>();
             services.AddTransient<IFileUploadService, FileUploadServiceImpl>();
 
             // TODO: move secret to config file
