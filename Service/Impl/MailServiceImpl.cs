@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
@@ -8,18 +9,24 @@ namespace Service.Impl
 {
     public class MailServiceImpl : IMailService
     {
+        private readonly IConfiguration _configuration;
+
+        public MailServiceImpl(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public void Send(string to, string subject, string body)
         {
-            // TODO: add params to config
             SmtpClient client = new SmtpClient
             {
-                Host = "mail@host.com",
-                Port = 1234,
-                Credentials = new NetworkCredential("username", "password")
+                Host = _configuration["Mail:Host"],
+                Port = int.Parse(_configuration["Mail:Port"]),
+                Credentials = new NetworkCredential(_configuration["Mail:Username"], _configuration["Mail:Password"])
             };
 
             client.SendMailAsync(new MailMessage(
-                from: "jane@contoso.com",
+                from: _configuration["Mail:Sender"],
                 to,
                 subject,
                 body

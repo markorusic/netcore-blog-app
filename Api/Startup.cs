@@ -52,8 +52,7 @@ namespace Api
             services.AddTransient<IFileUploadService, FileUploadServiceImpl>();
             services.AddTransient<IMailService, MailServiceImpl>();
 
-            // TODO: move secret to config file
-            var key = Encoding.ASCII.GetBytes("supertajnasifrasupertajnasifrasupertajnasifrasupertajnasifra");
+            var key = Encoding.ASCII.GetBytes(Configuration["Security:Secret"]);
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

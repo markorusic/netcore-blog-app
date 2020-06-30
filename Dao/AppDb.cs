@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Runtime.InteropServices;
 
@@ -7,17 +8,24 @@ namespace Dao
 {
     public class AppDb : DbContext
     {
+        private readonly IConfiguration _configuration;
+
+        public AppDb(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                optionsBuilder.UseInMemoryDatabase("BlogApp");
+                optionsBuilder.UseInMemoryDatabase(_configuration["Database:Name"]);
             }
             else
             {
-                optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=WebStoreApp;Integrated Security=True");
+                optionsBuilder.UseSqlServer(_configuration["Database:ConnectionString"]);
             }
         }
 

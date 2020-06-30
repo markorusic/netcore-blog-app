@@ -10,6 +10,7 @@ using Domain;
 using Dto.Request;
 using Dto.Response;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ResourceException;
 
@@ -26,18 +27,22 @@ namespace Service.Impl
 
         private readonly IMailService _mailService;
 
+        private readonly IConfiguration _configuration;
+
 
         public AuthServiceImpl(
             IMapper mapper,
             AppDb db,
             IHttpContextAccessor httpContextAccessor,
-            IMailService mailService
+            IMailService mailService,
+            IConfiguration configuration
         )
         {
             _mapper = mapper;
             _db = db;
             _httpContextAccessor = httpContextAccessor;
             _mailService = mailService;
+            _configuration = configuration;
         }
 
         public AuthResponseDto Authenticate(AuthRequestDto request)
@@ -75,7 +80,7 @@ namespace Service.Impl
         {
             // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("supertajnasifrasupertajnasifrasupertajnasifrasupertajnasifra");
+            var key = Encoding.ASCII.GetBytes(_configuration["Security:Secret"]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
