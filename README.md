@@ -17,6 +17,8 @@
 
 - [Obrada grešaka](#obrada-grešaka)
 
+- [Praćenje aktivnosti korisnika](#praćenje-aktivnosti-korisnika)
+
 - [Swaggeer API dokumentacija]("#swagger-api-dokumentacija")
     
 
@@ -96,6 +98,7 @@
   Autorizacija korisnika dešava se na nivou role. Postoje dva tipa korisničkih rola, korisnik i admin. Api-jevi za pretrage podataka su javni, medjutim oni koji se bave izmenom podataka zaštićeni su. Korisnik sa rolom korisnik može pristupiti Api-jevima za dodavanje, izmenu i brisanje postova, komentara i ocena. Korisnik sa rolom admin može pristupiti delu aplikaciej koji se bavi administracijom kategorija.
 
   Primer zaštite API endpointa:
+  
   ![user_autorize](images/user_autorize.png)
 
 
@@ -106,6 +109,18 @@
   Time imamo mogućnost da iz npr servisnog sloja izbacujemo izuzetke koje ne moramo pojedinačno, i ručno obrađivati, jer se o tome brine globalni ExceptionMiddleware. Primer izuzetaka u [implementaciji](https://github.com/markorusic/netcore-blog-app/blob/master/src/Service/Impl/PostServiceImpl.cs) `IPostSerivce`-a.
 
   ![post_service_exceptions](images/post_service_exceptions.png)
+
+
+## Praćenje aktivnosti korisnika
+
+  Aktivnosti ulogovanog korisnika koje menjaju stanje aplikacije se prate i zapisuju u bazu podataka. Logika praćenja aktivnosti apstraktovana je u [UserActivityService](https://github.com/markorusic/netcore-blog-app/blob/master/src/Service/Impl/UserActivityImpl.cs).
+  
+  Primer zapisivanja aktivnosti korisnika:
+  ```cs
+  _userActivityService.Track($"Created rate on post({postId}): {rate.Value}");
+  ```
+  
+  Aktivnost korisnika mogu se pretraziti putem `api/user-activity` endpointa kreiranog u [UserActivityController-u](https://github.com/markorusic/netcore-blog-app/blob/master/src/Api/Controllers/UserActivityController.cs).
 
 
 ## Swaggeer API dokumentacija
