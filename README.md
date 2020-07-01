@@ -48,34 +48,34 @@
 
   Domenski sloj aplikacije predstavlja skup klasa koje opisuju strukturu, i medjusobne relacije domenskih podataka naše aplikacije.
 
-  https://github.com/markorusic/netcore-blog-app/tree/master/Domain
+  https://github.com/markorusic/netcore-blog-app/tree/master/src/Domain
 
   ### Dao
 
   Dao, odnosno Data Access Object, je sloj koji se bavi komunikacijom naše aplikacije sa bazom podataka. Struktura podataka, i relacije baze opisani su u domenskom sloju, tako da se Dao sloj oslanja na njega. Upotrebom domenskog sloja i Entity Framework Core biblioteke za SQLServer dobijamo Dao sloj.
 
-  https://github.com/markorusic/netcore-blog-app/tree/master/Dao
+  https://github.com/markorusic/netcore-blog-app/tree/master/src/Dao
 
   ### Dto
 
   Dto, odnostno Data Transfer Object, prestsavlja skup klasa koje opisuju strukturu podatka koje želimo da prikažemo korisniku (klijentu) naše aplikacije. Svrha Dto klase je da strukturu odgovarajuće domenske klase prilagodi potrebama klijenta. Za mapiranje domenskih klasa u dto, korišćena je biblioteka Automapper.
 
-  https://github.com/markorusic/netcore-blog-app/tree/master/Dto
+  https://github.com/markorusic/netcore-blog-app/tree/master/src/Dto
 
   ### Service
 
   Servisni sloj predstavlja skup interfejsa koji opisuju biznis logiku naše aplikacije. Za svaki definisani interfejst pravimo klasu koja predstavlja stvarnu implementaciju, i u kojoj živi celokupna lokiga. Servisni sloj, odnosno njegova implementacija se oslanja na sve prehodno pomenute slojeve, kao i na druge servise, i njihovim kombinovanjem izvšava specifični zahtev. Implementacija servisnog interfejsa se ubacuje u IoC kontejner putem Dependency Injection mehanizna.
 
-  [Primer sevisnog interfejsa](https://github.com/markorusic/netcore-blog-app/tree/master/Service/IPostService.cs)
-  [Primer implementacije servisnog interfejsa](https://github.com/markorusic/netcore-blog-app/tree/master/Service/Impl/PostServiceImpl.cs)
+  [Primer sevisnog interfejsa](https://github.com/markorusic/netcore-blog-app/tree/master/src/Service/IPostService.cs)
+  [Primer implementacije servisnog interfejsa](https://github.com/markorusic/netcore-blog-app/tree/master/src/Service/Impl/PostServiceImpl.cs)
 
-  https://github.com/markorusic/netcore-blog-app/tree/master/Service
+  https://github.com/markorusic/netcore-blog-app/tree/master/src/Service
 
   ### Common
 
   Predstavlja skup klasa sa opštom namenom koje mogu biti korišćene na svim slojevima aplikacije.
 
-  https://github.com/markorusic/netcore-blog-app/tree/master/Common
+  https://github.com/markorusic/netcore-blog-app/tree/master/src/Common
 
 
   ### Api
@@ -84,14 +84,14 @@
 
   Centralni deo Api sloja predstavljau kontroleri. Njihov posao je da izlože definisane API endpointe preko kojih će klijenti moći da komuniciraju sa našom aplikaicjiom. Kontroleri se oslanjaju na servisni sloj za izvršavanje neophodne biznis lokige.
 
-  https://github.com/markorusic/netcore-blog-app/tree/master/Api
+  https://github.com/markorusic/netcore-blog-app/tree/master/src/Api
 
 
 ## Sigurnost
 
   Sigurnost, odnosno mogućnost zaštite određenih delova aplikacije, realizovana je JWT (JSON Web Token) standardom za autentifikaciju i autorizaciju korisnika. Zaštita se vrši na nivou jednog API endpointa kontrolera. 
   
-  Autentifikacija korisnika vrši se preko [AuthController-a](https://github.com/markorusic/netcore-blog-app/blob/master/Api/Controllers/AuthController.cs). Biznis logika neophodna za autentifikaciju i dohvatanje trenutnog korisnika apstraktovana je u [AuthSerivce](https://github.com/markorusic/netcore-blog-app/blob/master/Service/Impl/AuthServiceImpl.cs).
+  Autentifikacija korisnika vrši se preko [AuthController-a](https://github.com/markorusic/netcore-blog-app/blob/master/src/Api/Controllers/AuthController.cs). Biznis logika neophodna za autentifikaciju i dohvatanje trenutnog korisnika apstraktovana je u [AuthSerivce](https://github.com/markorusic/netcore-blog-app/blob/master/src/Service/Impl/AuthServiceImpl.cs).
   
   Autorizacija korisnika dešava se na nivou role. Postoje dva tipa korisničkih rola, korisnik i admin. Api-jevi za pretrage podataka su javni, medjutim oni koji se bave izmenom podataka zaštićeni su. Korisnik sa rolom korisnik može pristupiti Api-jevima za dodavanje, izmenu i brisanje postova, komentara i ocena. Korisnik sa rolom admin može pristupiti delu aplikaciej koji se bavi administracijom kategorija.
 
@@ -101,16 +101,16 @@
 
 ## Obrada grešaka
 
-  Obrada grešaka dešava se na globalnom nivou putem [ExceptionMiddleware](https://github.com/markorusic/netcore-blog-app/blob/master/Api/Middlewares/ExceptionMiddleware.cs) klase, koja se [inicijaluzuje](https://github.com/markorusic/netcore-blog-app/blob/master/Api/Startup.cs#L87) pri pokretanju Api projekta u zajedno sa ostalim komponentama.
+  Obrada grešaka dešava se na globalnom nivou putem [ExceptionMiddleware](https://github.com/markorusic/netcore-blog-app/blob/master/src/Api/Middlewares/ExceptionMiddleware.cs) klase, koja se [inicijaluzuje](https://github.com/markorusic/netcore-blog-app/blob/master/src/Api/Startup.cs#L87) pri pokretanju Api projekta u zajedno sa ostalim komponentama.
 
-  Time imamo mogućnost da iz npr servisnog sloja izbacujemo izuzetke koje ne moramo pojedinačno, i ručno obrađivati, jer se o tome brine globalni ExceptionMiddleware. Primer izuzetaka u [implementaciji](https://github.com/markorusic/netcore-blog-app/blob/master/Service/Impl/PostServiceImpl.cs) `IPostSerivce`-a.
+  Time imamo mogućnost da iz npr servisnog sloja izbacujemo izuzetke koje ne moramo pojedinačno, i ručno obrađivati, jer se o tome brine globalni ExceptionMiddleware. Primer izuzetaka u [implementaciji](https://github.com/markorusic/netcore-blog-app/blob/master/src/Service/Impl/PostServiceImpl.cs) `IPostSerivce`-a.
 
   ![post_service_exceptions](images/post_service_exceptions.png)
 
 
 ## Swaggeer API dokumentacija
 
-  Swaggeer API dokumentacija [inicijaluzuje](https://github.com/markorusic/netcore-blog-app/blob/master/Api/Startup.cs#L100) se pri pokretanju Api projekta, dostupna je na `/swagger/index.html` putanji.
+  Swaggeer API dokumentacija [inicijaluzuje](https://github.com/markorusic/netcore-blog-app/blob/master/src/Api/Startup.cs#L100) se pri pokretanju Api projekta, dostupna je na `/swagger/index.html` putanji.
 
   ![swagger-api-docs](images/swagger-api-docs.png)
 
