@@ -1,9 +1,3 @@
----
-title: Dokumentacija
-created: '2020-07-01T10:45:46.845Z'
-modified: '2020-07-01T13:05:54.755Z'
----
-
 # Dokumentacija
   
 - [Opis projekta](#opis-projekta)
