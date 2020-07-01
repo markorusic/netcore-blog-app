@@ -14,7 +14,7 @@
     <ProjectReference Include="..\Dao\Dao.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Dto\Dto.csproj" />
-    <ProjectReference Include="..\ResourceException\Common.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
 </Project>

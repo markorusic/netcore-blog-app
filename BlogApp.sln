@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", ".\Service\Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dto", ".\Dto\Dto.csproj", "{43EDA84E-610C-4726-A914-ACC685A54EFD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", ".\ResourceException\Common.csproj", "{B42E57E1-81F0-4785-A5AD-6B79FFDE7650}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", ".\Common\Common.csproj", "{B42E57E1-81F0-4785-A5AD-6B79FFDE7650}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
