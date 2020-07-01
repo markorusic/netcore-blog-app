@@ -1,0 +1,122 @@
+---
+title: Dokumentacija
+created: '2020-07-01T10:45:46.845Z'
+modified: '2020-07-01T13:05:54.755Z'
+---
+
+# Dokumentacija
+  
+- [Opis projekta](#opis-projekta)
+  
+- [Dizajn baze podataka](#dizajn-baze-podataka)
+  
+- [Arhitektura projekta](#arhitektura-projekta)
+
+  - [Domain](#domain)
+  - [Dao](#dao)
+  - [Dto](#dto)
+  - [Service](#service)
+  - [Common](#common)
+  - [Api]("#api")
+
+- [Sigurnost](#signurnost)
+
+- [Obrada grešaka](#obrada-grešaka)
+
+- [Swaggeer API dokumentacija]("#swagger-api-dokumentacija")
+    
+
+## Opis projekta
+
+  Projekat realizuje osnovne funkcionalnosti blog aplikacije. Neke od mogućnosti su logovanje korisnika, pretraga, dodavanje, brisanje, izmena, komentarisanje, ocenjivanje postova. Takodje postovi su rasporedjeni po kategorijama, jedan post moze biti u vise kategorija.
+
+  Tehnologije korišćene u izradi ove veb API aplikacije:
+  
+  * ASP .NET Core
+  * Entity Framework Core
+  * SQL Server
+  * JSON Web Token (JWT)
+  * AutoMapper
+  * Swagger API Docs
+
+
+## Dizajn baze podataka
+
+  Za čuvanje podataka koršćena je SQLServer baza podataka, sa sledećom strukturom:
+  ![blog_app_db_schema](images/blog_app_db_schema.png)
+
+
+## Arhitektura projekta
+
+  Aplikacija je rasporedjena u 6 projekata, od kojih svaki predstavlja jedan sloj u celokupnoj arhitekturi aplikacije.
+
+  ### Domain
+
+  Domenski sloj aplikacije predstavlja skup klasa koje opisuju strukturu, i medjusobne relacije domenskih podataka naše aplikacije.
+
+  https://github.com/markorusic/netcore-blog-app/tree/master/Domain
+
+  ### Dao
+
+  Dao, odnosno Data Access Object, je sloj koji se bavi komunikacijom naše aplikacije sa bazom podataka. Struktura podataka, i relacije baze opisani su u domenskom sloju, tako da se Dao sloj oslanja na njega. Upotrebom domenskog sloja i Entity Framework Core biblioteke za SQLServer dobijamo Dao sloj.
+
+  https://github.com/markorusic/netcore-blog-app/tree/master/Dao
+
+  ### Dto
+
+  Dto, odnostno Data Transfer Object, prestsavlja skup klasa koje opisuju strukturu podatka koje želimo da prikažemo korisniku (klijentu) naše aplikacije. Svrha Dto klase je da strukturu odgovarajuće domenske klase prilagodi potrebama klijenta. Za mapiranje domenskih klasa u dto, korišćena je biblioteka Automapper.
+
+  https://github.com/markorusic/netcore-blog-app/tree/master/Dto
+
+  ### Service
+
+  Servisni sloj predstavlja skup interfejsa koji opisuju biznis logiku naše aplikacije. Za svaki definisani interfejst pravimo klasu koja predstavlja stvarnu implementaciju, i u kojoj živi celokupna lokiga. Servisni sloj, odnosno njegova implementacija se oslanja na sve prehodno pomenute slojeve, kao i na druge servise, i njihovim kombinovanjem izvšava specifični zahtev. Implementacija servisnog interfejsa se ubacuje u IoC kontejner putem Dependency Injection mehanizna.
+
+  [Primer sevisnog interfejsa](https://github.com/markorusic/netcore-blog-app/tree/master/Service/IPostService.cs)
+  [Primer implementacije servisnog interfejsa](https://github.com/markorusic/netcore-blog-app/tree/master/Service/Impl/PostServiceImpl.cs)
+
+  https://github.com/markorusic/netcore-blog-app/tree/master/Service
+
+  ### Common
+
+  Predstavlja skup klasa sa opštom namenom koje mogu biti korišćene na svim slojevima aplikacije.
+
+  https://github.com/markorusic/netcore-blog-app/tree/master/Common
+
+
+  ### Api
+
+  Api je glavna ulazna tačka naše aplikacije. Za razliku od ostalih slojeva, koji  prestavljaju biblioteke klasa, Api sloj se izvršava samostalno. Glavna namena Api sloja je da pruži REST API pristup našoj aplikaciji. Pri pokretanju inicijalizuje se ceo projekat, konfiguracija, u DI kontejner se ubacuju neophodni dependecy-ji...
+
+  Centralni deo Api sloja predstavljau kontroleri. Njihov posao je da izlože definisane API endpointe preko kojih će klijenti moći da komuniciraju sa našom aplikaicjiom. Kontroleri se oslanjaju na servisni sloj za izvršavanje neophodne biznis lokige.
+
+  https://github.com/markorusic/netcore-blog-app/tree/master/Api
+
+
+## Sigurnost
+
+  Sigurnost, odnosno mogućnost zaštite određenih delova aplikacije, realizovana je JWT (JSON Web Token) standardom za autentifikaciju i autorizaciju korisnika. Zaštita se vrši na nivou jednog API endpointa kontrolera. 
+  
+  Autentifikacija korisnika vrši se preko [AuthController-a](https://github.com/markorusic/netcore-blog-app/blob/master/Api/Controllers/AuthController.cs). Biznis logika neophodna za autentifikaciju i dohvatanje trenutnog korisnika apstraktovana je u [AuthSerivce](https://github.com/markorusic/netcore-blog-app/blob/master/Service/Impl/AuthServiceImpl.cs).
+  
+  Autorizacija korisnika dešava se na nivou role. Postoje dva tipa korisničkih rola, korisnik i admin. Api-jevi za pretrage podataka su javni, medjutim oni koji se bave izmenom podataka zaštićeni su. Korisnik sa rolom korisnik može pristupiti Api-jevima za dodavanje, izmenu i brisanje postova, komentara i ocena. Korisnik sa rolom admin može pristupiti delu aplikaciej koji se bavi administracijom kategorija.
+
+  Primer zaštite API endpointa:
+  ![user_autorize](images/user_autorize.png)
+
+
+## Obrada grešaka
+
+  Obrada grešaka dešava se na globalnom nivou putem [ExceptionMiddleware](https://github.com/markorusic/netcore-blog-app/blob/master/Api/Middlewares/ExceptionMiddleware.cs) klase, koja se [inicijaluzuje](https://github.com/markorusic/netcore-blog-app/blob/master/Api/Startup.cs#L87) pri pokretanju Api projekta u zajedno sa ostalim komponentama.
+
+  Time imamo mogućnost da iz npr servisnog sloja izbacujemo izuzetke koje ne moramo pojedinačno, i ručno obrađivati, jer se o tome brine globalni ExceptionMiddleware. Primer izuzetaka u [implementaciji](https://github.com/markorusic/netcore-blog-app/blob/master/Service/Impl/PostServiceImpl.cs) `IPostSerivce`-a.
+
+  ![post_service_exceptions](images/post_service_exceptions.png)
+
+
+## Swaggeer API dokumentacija
+
+  Swaggeer API dokumentacija [inicijaluzuje](https://github.com/markorusic/netcore-blog-app/blob/master/Api/Startup.cs#L100) se pri pokretanju Api projekta, dostupna je na `/swagger/index.html` putanji.
+
+  ![swagger-api-docs](images/swagger-api-docs.png)
+
