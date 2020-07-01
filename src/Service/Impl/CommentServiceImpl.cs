@@ -19,11 +19,14 @@ namespace Service.Impl
 
         private readonly IAuthService _userService;
 
-        public CommentServiceImpl(IMapper mapper, AppDb db, IAuthService userService)
+        private readonly IUserActivity _userActivityService;
+
+        public CommentServiceImpl(IMapper mapper, AppDb db, IAuthService userService, IUserActivity userActivityService)
         {
             _mapper = mapper;
             _db = db;
             _userService = userService;
+            _userActivityService = userActivityService;
         }
 
 
@@ -45,6 +48,8 @@ namespace Service.Impl
             _db.Comments.Add(comment);
             _db.SaveChanges();
 
+            _userActivityService.Track($"Commnet on post({postId}): {comment.Content}");
+
             return _mapper.Map<CommentResponseDto>(comment);
         }
 
@@ -62,6 +67,8 @@ namespace Service.Impl
             }
             _db.Comments.Remove(comment);
             _db.SaveChanges();
+
+            _userActivityService.Track($"Deleted comment({id}): {comment.Content}");
         }
 
         public Page<CommentResponseDto> FindAll(int postId, PageableUserSearchDto request)
@@ -96,6 +103,8 @@ namespace Service.Impl
             comment.Content = request.Content;
 
             _db.SaveChanges();
+
+            _userActivityService.Track($"Updated comment({comment.Id}): {comment.Content}");
 
             return _mapper.Map<CommentResponseDto>(comment);
         }

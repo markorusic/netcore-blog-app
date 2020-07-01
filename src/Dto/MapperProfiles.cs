@@ -17,6 +17,7 @@ namespace Dto
             CreateMap<Rate, RateResponseDto>();
             CreateMap<Category, CategoryResponseDto>();
             CreateMap<Photo, PhotoResponseDto>();
+            CreateMap<UserActivity, UserActivityResponseDto>();
         }
     }
 }

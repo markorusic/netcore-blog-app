@@ -51,6 +51,7 @@ namespace Api
             services.AddTransient<ICategoryService, CategoryServiceImpl>();
             services.AddTransient<IFileUploadService, FileUploadServiceImpl>();
             services.AddTransient<IMailService, MailServiceImpl>();
+            services.AddTransient<IUserActivity, UserActivityImpl>();
 
             var key = Encoding.ASCII.GetBytes(Configuration["Security:Secret"]);
             services.AddAuthentication(x =>

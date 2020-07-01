@@ -17,10 +17,13 @@ namespace Service.Impl
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public FileUploadServiceImpl(IWebHostEnvironment hostingEnvironment, IHttpContextAccessor httpContextAccessor)
+        private readonly IUserActivity _userActivityService;
+
+        public FileUploadServiceImpl(IWebHostEnvironment hostingEnvironment, IHttpContextAccessor httpContextAccessor, IUserActivity userActivityService)
         {
             _env = hostingEnvironment;
             _httpContextAccessor = httpContextAccessor;
+            _userActivityService = userActivityService;
         }
         
         public string UploadImage(IFormFile file)
@@ -50,7 +53,11 @@ namespace Service.Impl
 
                 var request = _httpContextAccessor.HttpContext.Request;
                 var baseUrl = $"{request.Scheme}://{request.Host}{request.PathBase}";
-                return $"{baseUrl}/{dirName}/{fileName}";
+                var fullPath = $"{baseUrl}/{dirName}/{fileName}";
+
+                _userActivityService.Track($"Uploaded photo: {fullPath}");
+
+                return fullPath;
             }
             catch (Exception ex)
             {

@@ -23,11 +23,14 @@ namespace Service.Impl
 
         private readonly IAuthService _userService;
 
-        public RateServiceImpl(IMapper mapper, AppDb db, IAuthService userService)
+        private readonly IUserActivity _userActivityService;
+
+        public RateServiceImpl(IMapper mapper, AppDb db, IAuthService userService, IUserActivity userActivityService)
         {
             _mapper = mapper;
             _db = db;
             _userService = userService;
+            _userActivityService = userActivityService;
         }
 
         private Rate GetUserRate(int postId)
@@ -65,6 +68,8 @@ namespace Service.Impl
             _db.Rates.Add(rate);
             _db.SaveChanges();
 
+            _userActivityService.Track($"Created rate on post({postId}): {rate.Value}");
+
             return _mapper.Map<RateResponseDto>(rate);
         }
 
@@ -77,12 +82,14 @@ namespace Service.Impl
             }
             _db.Rates.Remove(userRate);
             _db.SaveChanges();
+
+            _userActivityService.Track($"Deleted rate on post {postId}");
         }
 
         public Page<RateResponseDto> FindAll(int postId, PageableUserSearchDto request)
         {
             var query = _db.Rates.AsQueryable()
-                .Where(rate=> rate.PostId == postId);
+                .Where(rate => rate.PostId == postId);
 
             if (request.UserId != null)
             {
@@ -104,6 +111,8 @@ namespace Service.Impl
 
             userRate.Value = request.Value;
             _db.SaveChanges();
+
+            _userActivityService.Track($"Updated rate on post({postId}): {userRate.Value}");
 
             return _mapper.Map<RateResponseDto>(userRate);
         }

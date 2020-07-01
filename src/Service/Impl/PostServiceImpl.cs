@@ -23,11 +23,15 @@ namespace Service.Impl
 
         private readonly IAuthService _userService;
 
-        public PostServiceImpl(IMapper mapper, AppDb db, IAuthService userService)
+        private readonly IUserActivity _userActivityService;
+
+
+        public PostServiceImpl(IMapper mapper, AppDb db, IAuthService userService, IUserActivity userActivityService)
         {
             _mapper = mapper;
             _db = db;
             _userService = userService;
+            _userActivityService = userActivityService;
         }
 
         public PostResponseDto Create(PostRequestDto request)
@@ -49,6 +53,9 @@ namespace Service.Impl
             };
             _db.Posts.Add(post);
             _db.SaveChanges();
+
+            _userActivityService.Track($"Created post: {post.Title}");
+
             return _mapper.Map<PostResponseDto>(post);
         }
 
@@ -66,6 +73,8 @@ namespace Service.Impl
             }
             _db.Posts.Remove(post);
             _db.SaveChanges();
+
+            _userActivityService.Track($"Deleted post({post.Id}): {post.Title}");
         }
 
         public Page<PostResponseDto> FindAll(PostSearchRequestDto request)
@@ -130,6 +139,8 @@ namespace Service.Impl
             post.Photos = request.Photos.Select(src => new Photo { Src = src }).ToList();
 
             _db.SaveChanges();
+
+            _userActivityService.Track($"Updated post({post.Id}): {post.Title}");
 
             return _mapper.Map<PostResponseDto>(post);
         }

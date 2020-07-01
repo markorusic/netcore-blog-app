@@ -19,10 +19,13 @@ namespace Service.Impl
 
         private readonly AppDb _db;
 
-        public CategoryServiceImpl(IMapper mapper, AppDb db)
+        private readonly IUserActivity _userActivityService;
+
+        public CategoryServiceImpl(IMapper mapper, AppDb db, IUserActivity userActivityService)
         {
             _mapper = mapper;
             _db = db;
+            _userActivityService = userActivityService;
         }
 
         public CategoryResponseDto Create(CategoryRequestDto request)
@@ -36,6 +39,8 @@ namespace Service.Impl
             _db.Categories.Add(category);
             _db.SaveChanges();
 
+            _userActivityService.Track($"Created category: {category.Name}");
+
             return _mapper.Map<CategoryResponseDto>(category);
         }
 
@@ -48,6 +53,8 @@ namespace Service.Impl
             }
             _db.Categories.Remove(category);
             _db.SaveChanges();
+
+            _userActivityService.Track($"Deleted category({category.Id}): {category.Name}");
         }
 
         public Page<CategoryResponseDto> FindAll(CategorySearchDto request)
@@ -86,6 +93,8 @@ namespace Service.Impl
             category.Description = request.Description;
 
             _db.SaveChanges();
+
+            _userActivityService.Track($"Updated category({category.Id}): {category.Name}");
 
             return _mapper.Map<CategoryResponseDto>(category);
         }

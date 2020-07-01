@@ -10,23 +10,17 @@ namespace Dao
     {
         private readonly IConfiguration _configuration;
 
-        public AppDb(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
+
+        //public AppDb(IConfiguration configuration) : base()
+        //{
+        //    _configuration = configuration;
+        //}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                optionsBuilder.UseInMemoryDatabase(_configuration["Database:Name"]);
-            }
-            else
-            {
-                optionsBuilder.UseSqlServer(_configuration["Database:ConnectionString"]);
-            }
+            optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=WebStoreApp;Integrated Security=True");
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,6 +37,8 @@ namespace Dao
 
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<UserActivity> UserActivites { get; set; }
 
         public DbSet<Post> Posts { get; set; }
 

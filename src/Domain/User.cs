@@ -20,5 +20,7 @@ namespace Domain
 
         public ICollection<Rate> Rates { get; set; }
 
+        public ICollection<UserActivity> Activities { get; set; }
+
     }
 }
