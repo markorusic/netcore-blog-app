@@ -1,6 +1,5 @@
 ﻿using Domain;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Runtime.InteropServices;
 
@@ -8,14 +7,6 @@ namespace Dao
 {
     public class AppDb : DbContext
     {
-        private readonly IConfiguration _configuration;
-
-
-        //public AppDb(IConfiguration configuration) : base()
-        //{
-        //    _configuration = configuration;
-        //}
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
