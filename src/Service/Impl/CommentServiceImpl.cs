@@ -19,9 +19,9 @@ namespace Service.Impl
 
         private readonly IAuthService _userService;
 
-        private readonly IUserActivity _userActivityService;
+        private readonly IUserActivityService _userActivityService;
 
-        public CommentServiceImpl(IMapper mapper, AppDb db, IAuthService userService, IUserActivity userActivityService)
+        public CommentServiceImpl(IMapper mapper, AppDb db, IAuthService userService, IUserActivityService userActivityService)
         {
             _mapper = mapper;
             _db = db;

@@ -15,9 +15,9 @@ namespace Api.Controllers
     [Route("api/user-activity")]
     public class UserActivityController : ControllerBase
     {
-        private readonly IUserActivity _userActivityService;
+        private readonly IUserActivityService _userActivityService;
 
-        public UserActivityController(IUserActivity userActivityService)
+        public UserActivityController(IUserActivityService userActivityService)
         {
             _userActivityService = userActivityService;
         }

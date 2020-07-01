@@ -11,7 +11,7 @@ using System.Text;
 
 namespace Service.Impl
 {
-    public class UserActivityImpl : IUserActivity
+    public class UserActivityImpl : IUserActivityService
     {
 
         private readonly IMapper _mapper;

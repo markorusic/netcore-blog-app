@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Service
 {
-    public interface IUserActivity
+    public interface IUserActivityService
     {
         public void Track(string actionType);
 

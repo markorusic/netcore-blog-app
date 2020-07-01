@@ -17,9 +17,9 @@ namespace Service.Impl
 
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private readonly IUserActivity _userActivityService;
+        private readonly IUserActivityService _userActivityService;
 
-        public FileUploadServiceImpl(IWebHostEnvironment hostingEnvironment, IHttpContextAccessor httpContextAccessor, IUserActivity userActivityService)
+        public FileUploadServiceImpl(IWebHostEnvironment hostingEnvironment, IHttpContextAccessor httpContextAccessor, IUserActivityService userActivityService)
         {
             _env = hostingEnvironment;
             _httpContextAccessor = httpContextAccessor;

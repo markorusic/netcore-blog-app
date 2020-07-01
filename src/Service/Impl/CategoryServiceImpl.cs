@@ -19,9 +19,9 @@ namespace Service.Impl
 
         private readonly AppDb _db;
 
-        private readonly IUserActivity _userActivityService;
+        private readonly IUserActivityService _userActivityService;
 
-        public CategoryServiceImpl(IMapper mapper, AppDb db, IUserActivity userActivityService)
+        public CategoryServiceImpl(IMapper mapper, AppDb db, IUserActivityService userActivityService)
         {
             _mapper = mapper;
             _db = db;
