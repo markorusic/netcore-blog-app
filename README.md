@@ -13,7 +13,7 @@
   - [Common](#common)
   - [Api](#api)
 
-- [Sigurnost](#signurnost)
+- [Sigurnost](#sigurnost)
 
 - [Obrada grešaka](#obrada-grešaka)
 
